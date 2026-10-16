@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Will You Be Mine? · A Magical Proposal</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:wght@300;400;600;700;800&family=Great+Vibes&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      overflow: hidden;
+      height: 100%;
+      width: 100%;
+      font-family: 'Poppins', sans-serif;
+      background: #02030a;
+      cursor: default;
+    }
+
+    body {
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      background: radial-gradient(ellipse at 30% 20%, #1a0b2e 0%, #0a0512 40%, #02030a 100%);
+      animation: bgBreath 8s ease-in-out infinite alternate;
+    }
+
+    @keyframes bgBreath {
+      0% { background: radial-gradient(ellipse at 30% 20%, #1a0b2e 0%, #0a0512 40%, #02030a 100%); }
+      100% { background: radial-gradient(ellipse at 70% 80%, #2b0f3a 0%, #120820 40%, #03030d 100%); }
+    }
+
+    #matrix-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0.75;
+    }
+
+    .aurora-layer {
+      position: fixed;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(from 0deg, transparent, rgba(255, 60, 140, 0.08), transparent, rgba(80, 255, 200, 0.08), transparent);
+      animation: auroraSpin 20s linear infinite;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    @keyframes auroraSpin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .particles-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .sparkle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: white;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #fff, 0 0 20px #ff5e9c, 0 0 30px #6effc0;
+      animation: sparkleFloat linear infinite;
+      opacity: 0.8;
+    }
+
+    @keyframes sparkleFloat {
+      0% { transform: translateY(0) translateX(0) scale(0.5); opacity: 0; }
+      20% { opacity: 1; }
+      100% { transform: translateY(-120vh) translateX(40px) scale(1.4); opacity: 0; }
+    }
+
+    .proposal-container {
+      position: relative;
+      z-index: 20;
+      width: 92%;
+      max-width: 720px;
+      padding: 2.2rem 1.8rem 2rem 1.8rem;
+      background: linear-gradient(145deg, rgba(15, 10, 30, 0.88), rgba(5, 3, 15, 0.92));
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 40px;
+      border: 1.5px solid rgba(255, 120, 180, 0.45);
+      box-shadow:
+        0 0 40px rgba(255, 60, 140, 0.4),
+        0 0 90px rgba(80, 255, 200, 0.15),
+        inset 0 0 60px rgba(255, 100, 180, 0.08);
+      animation: cardPulse 4s ease-in-out infinite alternate;
+      transition: transform 0.4s ease;
+    }
+
+    @keyframes cardPulse {
+      0% {
+        box-shadow: 0 0 40px rgba(255, 60, 140, 0.4), 0 0 90px rgba(80, 255, 200, 0.15);
+        border-color: rgba(255, 120, 180, 0.45);
+      }
+      100% {
+        box-shadow: 0 0 70px rgba(255, 120, 190, 0.7), 0 0 140px rgba(100, 255, 210, 0.35);
+        border-color: rgba(255, 180, 220, 0.75);
+      }
+    }
+
+    .shayari-box {
+      position: relative;
+      background: linear-gradient(135deg, rgba(20, 8, 30, 0.85), rgba(8, 4, 20, 0.95));
+      border-radius: 30px;
+      padding: 2.5rem 1.5rem;
+      margin-bottom: 1.8rem;
+      min-height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border: 1px solid rgba(255, 130, 200, 0.35);
+      box-shadow: inset 0 0 50px rgba(255, 80, 160, 0.12), 0 12px 40px rgba(0, 0, 0, 0.7);
+    }
+
+    .shayari-box::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, #ff3b7f, #6effc0, #ff3b7f, #6effc0);
+      background-size: 400% 400%;
+      border-radius: 30px;
+      z-index: -1;
+      animation: borderFlow 6s linear infinite;
+      opacity: 0.6;
+      filter: blur(6px);
+    }
+
+    @keyframes borderFlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    #shayariDisplay {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.1rem;
+      font-weight: 700;
+      text-align: center;
+      color: #fff5fa;
+      line-height: 1.6;
+      letter-spacing: 0.5px;
+      text-shadow: 0 0 20px rgba(255, 80, 150, 0.9), 0 0 40px rgba(110, 255, 200, 0.4);
+      word-break: break-word;
+      min-height: 3.2rem;
+    }
+
+    .shayari-line {
+      display: block;
+      opacity: 0;
+      transform: translateY(25px) scale(0.9);
+      animation: lineReveal 0.8s cubic-bezier(0.2, 1.2, 0.4, 1) forwards;
+    }
+
+    .shayari-line:nth-child(1) { animation-delay: 0.15s; }
+    .shayari-line:nth-child(2) { animation-delay: 0.55s; }
+
+    @keyframes lineReveal {
+      0% {
+        opacity: 0;
+        transform: translateY(25px) scale(0.9);
+        filter: blur(6px);
+        letter-spacing: 8px;
+      }
+      60% {
+        opacity: 1;
+        transform: translateY(-4px) scale(1.03);
+        filter: blur(0);
+        letter-spacing: 1px;
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        letter-spacing: 0.5px;
+      }
+    }
+
+    .shayari-glow {
+      animation: textPulse 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes textPulse {
+      0% { text-shadow: 0 0 20px rgba(255, 80, 150, 0.9), 0 0 40px rgba(110, 255, 200, 0.4); }
+      100% { text-shadow: 0 0 35px rgba(255, 130, 190, 1), 0 0 70px rgba(130, 255, 220, 0.7), 0 0 100px rgba(255, 80, 150, 0.5); }
+    }
+
+    .button-row {
+      display: flex;
+      gap: 1.2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 5;
+    }
+
+    .btn-magic {
+      position: relative;
+      padding: 1rem 2.4rem;
+      font-size: 1.35rem;
+      font-weight: 700;
+      font-family: 'Poppins', sans-serif;
+      border: none;
+      border-radius: 60px;
+      color: #fff5fa;
+      letter-spacing: 1px;
+      cursor: pointer;
+      overflow: hidden;
+      background: linear-gradient(145deg, #2a1a3a, #0d0618);
+      border: 1.5px solid rgba(255, 130, 200, 0.6);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7), 0 0 25px rgba(255, 60, 140, 0.35), inset 0 0 20px rgba(255, 100, 180, 0.1);
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s, background 0.25s;
+      text-shadow: 0 0 12px rgba(255, 120, 190, 0.9);
+      flex: 1;
+      max-width: 200px;
+      min-width: 140px;
+    }
+
+    .btn-magic::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 180, 220, 0.35), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .btn-magic:hover::before {
+      left: 100%;
+    }
+
+    .btn-magic:hover {
+      transform: translateY(-4px) scale(1.06);
+      background: linear-gradient(145deg, #3d2455, #170b28);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8), 0 0 45px rgba(255, 80, 160, 0.6), 0 0 80px rgba(110, 255, 200, 0.3);
+      color: #ffffff;
+    }
+
+    .btn-magic:active {
+      transform: translateY(0) scale(0.97);
+    }
+
+    .btn-magic:disabled {
+      opacity: 0.35;
+      pointer-events: none;
+      transform: none;
+      box-shadow: none;
+      border-color: rgba(120, 120, 120, 0.4);
+    }
+
+    .popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(2, 0, 10, 0.82);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.5s ease, visibility 0.5s;
+      padding: 1rem;
+    }
+
+    .popup-overlay.active {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .popup-card {
+      position: relative;
+      background: linear-gradient(150deg, #180d2a, #060210);
+      padding: 3rem 2rem 2.5rem;
+      border-radius: 50px;
+      width: 100%;
+      max-width: 540px;
+      text-align: center;
+      border: 2px solid rgba(255, 140, 210, 0.6);
+      box-shadow:
+        0 0 60px rgba(255, 60, 140, 0.6),
+        0 0 120px rgba(80, 255, 200, 0.3),
+        inset 0 0 60px rgba(255, 100, 180, 0.1);
+      transform: scale(0.8) rotateX(10deg);
+      transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      overflow: hidden;
+    }
+
+    .popup-overlay.active .popup-card {
+      transform: scale(1) rotateX(0deg);
+    }
+
+    .popup-card::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(from 0deg, transparent, rgba(255, 80, 160, 0.15), transparent, rgba(110, 255, 200, 0.15), transparent);
+      animation: cardAurora 10s linear infinite;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    @keyframes cardAurora {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .popup-question {
+      position: relative;
+      z-index: 2;
+      font-family: 'Poppins', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.4;
+      margin-bottom: 2.5rem;
+      text-shadow: 0 0 25px rgba(255, 80, 150, 1), 0 0 50px rgba(110, 255, 200, 0.6);
+      word-break: break-word;
+      min-height: 4rem;
+    }
+
+    .popup-btn-group {
+      position: relative;
+      z-index: 5;
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      min-height: 80px;
+      align-items: center;
+    }
+
+    .popup-btn {
+      padding: 1rem 2.2rem;
+      font-size: 1.4rem;
+      font-weight: 700;
+      font-family: 'Poppins', sans-serif;
+      border: none;
+      border-radius: 60px;
+      cursor: pointer;
+      letter-spacing: 1px;
+      min-width: 140px;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s, background 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .popup-btn.yes-btn {
+      background: linear-gradient(145deg, #ff3b7f, #b31b5a);
+      color: white;
+      box-shadow: 0 8px 25px rgba(255, 60, 140, 0.6), 0 0 40px rgba(255, 80, 160, 0.4);
+      border: 1.5px solid rgba(255, 180, 220, 0.8);
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+    }
+
+    .popup-btn.yes-btn:hover {
+      transform: translateY(-4px) scale(1.08);
+      box-shadow: 0 15px 40px rgba(255, 80, 160, 0.9), 0 0 80px rgba(255, 100, 180, 0.6);
+      background: linear-gradient(145deg, #ff4d8a, #d4246e);
+    }
+
+    .popup-btn.shayad-btn {
+      background: linear-gradient(145deg, #2a1a3a, #0d0618);
+      color: #ffd6ec;
+      border: 1.5px solid rgba(255, 130, 200, 0.7);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7), 0 0 30px rgba(110, 255, 200, 0.3);
+      text-shadow: 0 0 12px rgba(255, 130, 200, 0.8);
+    }
+
+    .popup-btn.shayad-btn:hover {
+      transform: translateY(-4px) scale(1.08);
+      background: linear-gradient(145deg, #3d2455, #170b28);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8), 0 0 60px rgba(110, 255, 200, 0.5);
+    }
+
+    .popup-btn.no-btn {
+      background: linear-gradient(145deg, #1f1f2f, #0a0a14);
+      color: #b0b0c0;
+      border: 1.5px solid rgba(150, 150, 170, 0.5);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+      transition: all 0.15s ease;
+      position: relative;
+    }
+
+    .popup-btn.no-btn:hover {
+      background: #252535;
+    }
+
+    .final-love-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, #1a0025 0%, #050008 70%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      z-index: 2000;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.8s ease, visibility 0.8s;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .final-love-overlay.show {
+      visibility: visible;
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .final-love-text {
+      font-family: 'Great Vibes', cursive;
+      font-size: 7rem;
+      font-weight: 700;
+      color: #ffffff;
+      text-align: center;
+      text-shadow:
+        0 0 30px #ff1e6e,
+        0 0 60px #ff4d8a,
+        0 0 100px #ff8ab5,
+        0 0 160px #6effc0;
+      animation: lovePulse 1.6s ease-in-out infinite, loveFloat 3s ease-in-out infinite alternate;
+      letter-spacing: 4px;
+      line-height: 1.1;
+      padding: 1rem 2rem;
+      z-index: 10;
+      position: relative;
+    }
+
+    @keyframes lovePulse {
+      0% { transform: scale(1); text-shadow: 0 0 30px #ff1e6e, 0 0 60px #ff4d8a, 0 0 100px #ff8ab5; }
+      50% { transform: scale(1.15); text-shadow: 0 0 60px #ff4d8a, 0 0 120px #ffb0d0, 0 0 180px #6effc0, 0 0 260px #ff3b7f; }
+      100% { transform: scale(1); text-shadow: 0 0 30px #ff1e6e, 0 0 60px #ff4d8a, 0 0 100px #ff8ab5; }
+    }
+
+    @keyframes loveFloat {
+      0% { transform: translateY(0px) rotate(-1.5deg); }
+      100% { transform: translateY(-20px) rotate(1.5deg); }
+    }
+
+    .final-hearts-container {
+      position: absolute;
+      inset: 0;
+      z-index: 5;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .final-heart {
+      position: absolute;
+      font-size: 2.5rem;
+      opacity: 0.9;
+      animation: finalHeartRise linear infinite;
+      filter: drop-shadow(0 0 20px #ff3b7f);
+      will-change: transform, opacity;
+    }
+
+    @keyframes finalHeartRise {
+      0% { transform: translateY(110vh) scale(0.6) rotate(0deg); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 0.9; }
+      100% { transform: translateY(-20vh) scale(1.4) rotate(360deg); opacity: 0; }
+    }
+
+    .heart-particle {
+      position: fixed;
+      pointer-events: none;
+      z-index: 8;
+      animation: heartFlyUp linear forwards;
+      filter: drop-shadow(0 0 18px #ff3b7f);
+      will-change: transform, opacity;
+    }
+
+    @keyframes heartFlyUp {
+      0% { transform: translateY(0) rotate(0deg) scale(0.6); opacity: 0.95; }
+      80% { opacity: 0.8; }
+      100% { transform: translateY(-110vh) rotate(400deg) scale(1.6); opacity: 0; }
+    }
+
+    .falling-code {
+      position: fixed;
+      top: -60px;
+      font-family: 'Courier New', monospace;
+      font-size: 1.1rem;
+      color: rgba(110, 255, 200, 0.6);
+      text-shadow: 0 0 12px rgba(110, 255, 200, 0.8);
+      pointer-events: none;
+      z-index: 3;
+      animation: codeFall linear forwards;
+      will-change: transform, opacity;
+      white-space: nowrap;
+    }
+
+    @keyframes codeFall {
+      0% { transform: translateY(0) rotate(0deg); opacity: 0.9; }
+      100% { transform: translateY(120vh) rotate(10deg); opacity: 0; }
+    }
+
+    .floating-emoji {
+      position: fixed;
+      pointer-events: none;
+      z-index: 6;
+      animation: emojiDrift linear infinite;
+      opacity: 0.7;
+      will-change: transform;
+    }
+
+    @keyframes emojiDrift {
+      0% { transform: translate(0, 0) rotate(0deg); }
+      25% { transform: translate(30px, -60px) rotate(15deg); }
+      50% { transform: translate(-20px, -120px) rotate(-10deg); }
+      75% { transform: translate(40px, -180px) rotate(20deg); }
+      100% { transform: translate(0, -240px) rotate(0deg); opacity: 0; }
+    }
+
+    .name-title {
+      text-align: center;
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.8rem;
+      color: #ffd6ec;
+      margin-bottom: 0.8rem;
+      text-shadow: 0 0 20px rgba(255, 80, 150, 0.8);
+      opacity: 0.9;
+      letter-spacing: 2px;
+    }
+
+    .progress-dots {
+      display: flex;
+      justify-content: center;
+      gap: 0.6rem;
+      margin-top: 1.5rem;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255, 130, 200, 0.3);
+      border: 1px solid rgba(255, 130, 200, 0.5);
+      transition: all 0.4s ease;
+    }
+
+    .dot.active {
+      background: #ff3b7f;
+      box-shadow: 0 0 15px #ff3b7f, 0 0 30px #ff6fa9;
+      transform: scale(1.3);
+    }
+
+    .dot.completed {
+      background: #6effc0;
+      box-shadow: 0 0 12px #6effc0;
+      border-color: #6effc0;
+    }
+
+    @media (max-width: 600px) {
+      .proposal-container { padding: 1.5rem 1rem 1.4rem; border-radius: 30px; }
+      #shayariDisplay { font-size: 1.5rem; }
+      .shayari-box { padding: 1.8rem 1rem; min-height: 170px; }
+      .btn-magic { font-size: 1.05rem; padding: 0.85rem 1.2rem; min-width: 120px; }
+      .popup-card { padding: 2.2rem 1.2rem 2rem; border-radius: 35px; }
+      .popup-question { font-size: 1.4rem; }
+      .popup-btn { font-size: 1.1rem; padding: 0.8rem 1.4rem; min-width: 110px; }
+      .final-love-text { font-size: 3.8rem; padding: 0.5rem; }
+      .name-title { font-size: 1.3rem; }
+    }
+
+    @media (max-width: 380px) {
+      #shayariDisplay { font-size: 1.25rem; }
+      .final-love-text { font-size: 2.8rem; }
+      .popup-question { font-size: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="matrix-canvas"></canvas>
+  <div class="aurora-layer"></div>
+  <div class="particles-layer" id="particlesLayer"></div>
+
+  <div class="proposal-container">
+    <div class="name-title">✨ For You, My Love ✨</div>
+    <div class="shayari-box">
+      <div id="shayariDisplay"></div>
+    </div>
+
+    <div class="button-row">
+      <button class="btn-magic" id="backBtn" disabled>◀ Back</button>
+      <button class="btn-magic" id="nextBtn">Next ▶</button>
+    </div>
+
+    <div class="progress-dots" id="progressDots"></div>
+  </div>
+
+  <div class="popup-overlay" id="firstPopup">
+    <div class="popup-card">
+      <div class="popup-question">kya mai ek question puch sakta hui? 🌸</div>
+      <div class="popup-btn-group">
+        <button class="popup-btn yes-btn" id="firstYes">Yes 💖</button>
+        <button class="popup-btn no-btn" id="firstNo">No 🙈</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="popup-overlay" id="shayadPopup">
+    <div class="popup-card">
+      <div class="popup-question" id="shayadQuestion">please man jao na 🥺</div>
+      <div class="popup-btn-group">
+        <button class="popup-btn yes-btn" id="shayadYesBtn">Yes 💘</button>
+        <button class="popup-btn shayad-btn" id="shayadCloseBtn">Thik hai 🤗</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="popup-overlay" id="secondPopup">
+    <div class="popup-card">
+      <div class="popup-question" id="gfQuestion">kya tum meri gf banogi? 💕</div>
+      <div class="popup-btn-group" id="gfBtnGroup">
+        <button class="popup-btn yes-btn" id="gfYesBtn">Yes 💘</button>
+        <button class="popup-btn shayad-btn" id="gfShayadBtn">Shayad 🤔</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="final-love-overlay" id="finalLove">
+    <div class="final-hearts-container" id="finalHeartsContainer"></div>
+    <div class="final-love-text">I LOVE Programming</div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    (function() {
+      const canvas = document.getElementById('matrix-canvas');
+      const ctx = canvas.getContext('2d');
+      let w, h;
+
+      function resizeCanvas() {
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+      }
+      window.addEventListener('resize', resizeCanvas);
+      resizeCanvas();
+
+      const chars = "01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン♡♥❤💕💖💗💓💞💘";
+      const fontSize = 16;
+      let columns = Math.floor(w / fontSize) + 1;
+      let drops = [];
+
+      function initDrops() {
+        columns = Math.floor(w / fontSize) + 1;
+        drops = [];
+        for (let i = 0; i < columns; i++) {
+          drops[i] = Math.floor(Math.random() * h / fontSize);
+        }
+      }
+      initDrops();
+      window.addEventListener('resize', initDrops);
+
+      let heartParticles = [];
+      let fallingCodes = [];
+
+      function spawnCanvasHeart() {
+        const heartChars = ['❤️', '💖', '💗', '💓', '💕', '💞', '🌸', '✨', '💘', '💝'];
+        heartParticles.push({
+          x: Math.random() * w,
+          y: h + 30,
+          size: 16 + Math.random() * 34,
+          char: heartChars[Math.floor(Math.random() * heartChars.length)],
+          speed: 0.6 + Math.random() * 2,
+          opacity: 0.7 + Math.random() * 0.3,
+          wobble: Math.random() * 2,
+        });
+      }
+
+      function drawMatrix() {
+        ctx.fillStyle = 'rgba(2, 3, 10, 0.08)';
+        ctx.fillRect(0, 0, w, h);
+
+        ctx.font = `${fontSize}px 'Courier New', monospace`;
+        ctx.textAlign = 'center';
+
+        for (let i = 0; i < drops.length; i++) {
+          const char = chars[Math.floor(Math.random() * chars.length)];
+          const x = i * fontSize + fontSize / 2;
+          const y = drops[i] * fontSize;
+
+          const hue = (i * 7 + Date.now() * 0.015) % 360;
+          ctx.fillStyle = `hsla(${hue}, 95%, 68%, 0.9)`;
+          ctx.shadowColor = '#ff3b7f';
+          ctx.shadowBlur = 14;
+          ctx.fillText(char, x, y);
+          ctx.shadowBlur = 0;
+
+          if (y > h && Math.random() > 0.972) {
+            drops[i] = 0;
+          }
+          drops[i]++;
+        }
+
+        heartParticles = heartParticles.filter(p => p.y > -60 && p.opacity > 0.02);
+        for (let p of heartParticles) {
+          ctx.font = `${p.size}px 'Segoe UI', 'Arial', sans-serif`;
+          ctx.fillStyle = `rgba(255, 80, 140, ${p.opacity})`;
+          ctx.shadowColor = '#ff6fa9';
+          ctx.shadowBlur = 28;
+          ctx.fillText(p.char, p.x, p.y);
+          ctx.shadowBlur = 0;
+          p.y -= p.speed;
+          p.x += Math.sin(p.y * 0.02 + p.wobble) * 1.3;
+          p.opacity -= 0.002;
+        }
+      }
+
+      function animate() {
+        drawMatrix();
+        if (Math.random() < 0.22) spawnCanvasHeart();
+        requestAnimationFrame(animate);
+      }
+      animate();
+
+      function spawnDomHeart() {
+        const heartDiv = document.createElement('div');
+        heartDiv.className = 'heart-particle';
+        const chars = ['❤️', '💖', '🌸', '✨', '💕', '💘', '💝', '💗'];
+        heartDiv.textContent = chars[Math.floor(Math.random() * chars.length)];
+        heartDiv.style.left = Math.random() * 100 + '%';
+        heartDiv.style.bottom = '-50px';
+        heartDiv.style.fontSize = (18 + Math.random() * 40) + 'px';
+        heartDiv.style.animationDuration = (4 + Math.random() * 7) + 's';
+        heartDiv.style.animationDelay = (Math.random() * 0.5) + 's';
+        document.body.appendChild(heartDiv);
+        setTimeout(() => heartDiv.remove(), 12000);
+      }
+
+      function spawnFallingCode() {
+        const codeDiv = document.createElement('div');
+        codeDiv.className = 'falling-code';
+        const codeSnippets = [
+          'love.init()', 'while(true) {❤️}', 'if(you) return me;',
+          'const us = true;', 'heart.beat(∞)', 'forever && always',
+          'await yourAnswer()', 'try { love } catch { you }',
+          'soul.connect(you)', 'destiny.merge(us)', 'promise.then(forever)',
+          'for(;;) { missYou(); }', 'if(smile) heart.melt();',
+          'love.isReal = true;', 'you + me = 💕', 'always && forever',
+        ];
+        codeDiv.textContent = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
+        codeDiv.style.left = Math.random() * 95 + '%';
+        codeDiv.style.animationDuration = (6 + Math.random() * 8) + 's';
+        codeDiv.style.fontSize = (0.8 + Math.random() * 0.7) + 'rem';
+        codeDiv.style.color = `hsla(${Math.random() * 60 + 300}, 90%, 70%, 0.7)`;
+        document.body.appendChild(codeDiv);
+        setTimeout(() => codeDiv.remove(), 15000);
+      }
+
+      function spawnSparkle() {
+        const sparkle = document.createElement('div');
+        sparkle.className = 'sparkle';
+        sparkle.style.left = Math.random() * 100 + '%';
+        sparkle.style.bottom = Math.random() * 100 + '%';
+        sparkle.style.animationDuration = (3 + Math.random() * 6) + 's';
+        sparkle.style.animationDelay = (Math.random() * 4) + 's';
+        document.getElementById('particlesLayer').appendChild(sparkle);
+        setTimeout(() => sparkle.remove(), 12000);
+      }
+
+      function spawnFloatingEmoji() {
+        const emoji = document.createElement('div');
+        emoji.className = 'floating-emoji';
+        const emojis = ['🌸', '✨', '💫', '🌟', '💖', '🌺', '🦋', '🌷', '💐', '🪷'];
+        emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        emoji.style.left = Math.random() * 100 + '%';
+        emoji.style.bottom = '-30px';
+        emoji.style.fontSize = (16 + Math.random() * 28) + 'px';
+        emoji.style.animationDuration = (8 + Math.random() * 10) + 's';
+        document.body.appendChild(emoji);
+        setTimeout(() => emoji.remove(), 20000);
+      }
+
+      setInterval(() => { if (Math.random() < 0.4) spawnDomHeart(); }, 900);
+      setInterval(() => { if (Math.random() < 0.5) spawnFallingCode(); }, 1400);
+      setInterval(() => { if (Math.random() < 0.6) spawnSparkle(); }, 1800);
+      setInterval(() => { if (Math.random() < 0.3) spawnFloatingEmoji(); }, 2500);
+
+      const shayariList = [
+        "❤️ तेरी एक मुस्कान पे सब कुछ लुटा दूँ,\nतू बन जाए मेरी, तो दुनिया भुला दूँ।",
+        "✨ तू है तो लगता है ये जहाँ हसीं है,\nतेरे बिना ये दिल कहीं भी नहीं है।",
+        "🌸 तेरी बातों में वो नशा है,\nजो मुझे हर पल तेरा दीवाना बनाता है।",
+        "💕 चाँद भी शरमाए तेरे नूर से,\nतू पास आए तो दिल कहे, ठहर जा यहीं।",
+        "💖 मैं तेरा, तू मेरी, ये वादा रहा,\nहर जनम में तू ही मेरी हमसफर रहा।"
+      ];
+
+      let currentIndex = 0;
+      const shayariDisplay = document.getElementById('shayariDisplay');
+      const backBtn = document.getElementById('backBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      const progressDots = document.getElementById('progressDots');
+
+      shayariList.forEach((_, i) => {
+        const dot = document.createElement('div');
+        dot.className = 'dot';
+        dot.dataset.index = i;
+        progressDots.appendChild(dot);
+      });
+
+      function updateDots() {
+        const dots = progressDots.querySelectorAll('.dot');
+        dots.forEach((dot, i) => {
+          dot.classList.remove('active', 'completed');
+          if (i < currentIndex) dot.classList.add('completed');
+          if (i === currentIndex) dot.classList.add('active');
+        });
+      }
+
+      function typeShayari(text, callback) {
+        shayariDisplay.innerHTML = '';
+        const lines = text.split('\n');
+        let lineIndex = 0;
+
+        function revealLine() {
+          if (lineIndex >= lines.length) {
+            if (callback) callback();
+            return;
+          }
+          const lineSpan = document.createElement('span');
+          lineSpan.className = 'shayari-line';
+          lineSpan.textContent = lines[lineIndex];
+          shayariDisplay.appendChild(lineSpan);
+          lineIndex++;
+          setTimeout(revealLine, 700);
+        }
+        revealLine();
+      }
+
+      function showShayari(index, animate = true) {
+        updateDots();
+        if (animate) {
+          typeShayari(shayariList[index], () => {
+            shayariDisplay.classList.add('shayari-glow');
+          });
+        } else {
+          shayariDisplay.innerHTML = '';
+          const lines = shayariList[index].split('\n');
+          lines.forEach(line => {
+            const span = document.createElement('span');
+            span.className = 'shayari-line';
+            span.textContent = line;
+            span.style.animationDelay = '0s';
+            span.style.opacity = '1';
+            span.style.transform = 'none';
+            span.style.filter = 'none';
+            shayariDisplay.appendChild(span);
+          });
+          shayariDisplay.classList.add('shayari-glow');
+        }
+        backBtn.disabled = index === 0;
+        nextBtn.disabled = index === shayariList.length - 1;
+      }
+
+      showShayari(0, true);
+
+      backBtn.addEventListener('click', () => {
+        if (currentIndex > 0) {
+          currentIndex--;
+          showShayari(currentIndex, true);
+        }
+      });
+
+      nextBtn.addEventListener('click', () => {
+        if (currentIndex < shayariList.length - 1) {
+          currentIndex++;
+          showShayari(currentIndex, true);
+          if (currentIndex === shayariList.length - 1) {
+            setTimeout(() => {
+              document.getElementById('firstPopup').classList.add('active');
+            }, 1800);
+          }
+        }
+      });
+
+      const firstPopup = document.getElementById('firstPopup');
+      const firstYes = document.getElementById('firstYes');
+      const firstNo = document.getElementById('firstNo');
+
+      firstNo.addEventListener('mouseenter', (e) => {
+        const btn = e.target;
+        const maxX = window.innerWidth - 160;
+        const maxY = window.innerHeight - 110;
+        btn.style.position = 'fixed';
+        btn.style.left = Math.max(10, Math.random() * maxX) + 'px';
+        btn.style.top = Math.max(10, Math.random() * maxY) + 'px';
+        btn.style.zIndex = '1100';
+        btn.style.transition = 'left 0.25s ease, top 0.25s ease';
+      });
+
+      firstNo.addEventListener('click', (e) => {
+        e.preventDefault();
+        const btn = e.target;
+        const maxX = window.innerWidth - 160;
+        const maxY = window.innerHeight - 110;
+        btn.style.position = 'fixed';
+        btn.style.left = Math.max(10, Math.random() * maxX) + 'px';
+        btn.style.top = Math.max(10, Math.random() * maxY) + 'px';
+        btn.style.zIndex = '1100';
+      });
+
+      firstYes.addEventListener('click', () => {
+        firstPopup.classList.remove('active');
+        document.getElementById('secondPopup').classList.add('active');
+        resetShayadState();
+      });
+
+      const secondPopup = document.getElementById('secondPopup');
+      const gfYesBtn = document.getElementById('gfYesBtn');
+      const gfShayadBtn = document.getElementById('gfShayadBtn');
+      const gfQuestion = document.getElementById('gfQuestion');
+
+      const shayadPopup = document.getElementById('shayadPopup');
+      const shayadQuestion = document.getElementById('shayadQuestion');
+      const shayadYesBtn = document.getElementById('shayadYesBtn');
+      const shayadCloseBtn = document.getElementById('shayadCloseBtn');
+
+      const shayadMessages = [
+        'please man jao na 🥺',
+        'please man jao na, ek baar keh do haan 💕',
+        'arre please na, dil se keh raha hoon 🥺❤️',
+        'bas ek baar haan bol do, duniya tumhari 💖',
+        'meri jaan, please man jao na 🌸',
+        'tumhare bina kuch achha nahi lagta, please 🥺',
+        'haan bol do na, meri duniya tum ho 💕'
+      ];
+
+      let shayadIndex = 0;
+
+      function resetShayadState() {
+        shayadIndex = 0;
+        shayadQuestion.textContent = shayadMessages[0];
+        gfQuestion.textContent = 'kya tum meri gf banogi? 💕';
+      }
+
+      gfShayadBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        secondPopup.classList.remove('active');
+        shayadPopup.classList.add('active');
+        shayadQuestion.textContent = shayadMessages[shayadIndex % shayadMessages.length];
+        shayadIndex++;
+      });
+
+      shayadYesBtn.addEventListener('click', () => {
+        shayadPopup.classList.remove('active');
+        triggerFinalLove();
+      });
+
+      shayadCloseBtn.addEventListener('click', () => {
+        shayadPopup.classList.remove('active');
+        secondPopup.classList.add('active');
+        gfQuestion.textContent = 'kya tum meri gf banogi? 💕';
+      });
+
+      gfYesBtn.addEventListener('click', () => {
+        secondPopup.classList.remove('active');
+        triggerFinalLove();
+      });
+
+      function triggerFinalLove() {
+        const finalOverlay = document.getElementById('finalLove');
+        finalOverlay.classList.add('show');
+
+        const container = document.getElementById('finalHeartsContainer');
+        const heartEmojis = ['❤️', '💖', '💗', '💓', '💕', '💞', '💘', '💝', '🌸', '✨', '💫'];
+
+        for (let i = 0; i < 60; i++) {
+          setTimeout(() => {
+            const heart = document.createElement('div');
+            heart.className = 'final-heart';
+            heart.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.fontSize = (20 + Math.random() * 50) + 'px';
+            heart.style.animationDuration = (4 + Math.random() * 6) + 's';
+            heart.style.animationDelay = (Math.random() * 3) + 's';
+            container.appendChild(heart);
+          }, i * 80);
+        }
+
+        for (let i = 0; i < 80; i++) {
+          setTimeout(() => {
+            spawnDomHeart();
+            spawnCanvasHeart();
+          }, i * 100);
+        }
+
+        setInterval(() => {
+          if (finalOverlay.classList.contains('show')) {
+            const heart = document.createElement('div');
+            heart.className = 'final-heart';
+            heart.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.fontSize = (20 + Math.random() * 50) + 'px';
+            heart.style.animationDuration = (4 + Math.random() * 6) + 's';
+            heart.style.animationDelay = '0s';
+            container.appendChild(heart);
+            setTimeout(() => heart.remove(), 12000);
+          }
+        }, 400);
+      }
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' && !nextBtn.disabled) nextBtn.click();
+        if (e.key === 'ArrowLeft' && !backBtn.disabled) backBtn.click();
+      });
+
+      setInterval(() => {
+        if (Math.random() < 0.4) spawnDomHeart();
+      }, 1800);
+
+      const style = document.createElement('style');
+      style.textContent = `
+        @keyframes shakeNo {
+          0%, 100% { transform: translateX(0); }
+          25% { transform: translateX(-8px); }
+          75% { transform: translateX(8px); }
+        }
+      `;
+      document.head.appendChild(style);
+
+      firstNo.addEventListener('mouseover', () => {
+        firstNo.style.animation = 'shakeNo 0.4s ease';
+        setTimeout(() => { firstNo.style.animation = ''; }, 400);
+      });
+
+    })();
+  </script>
+</body>
+</html>
